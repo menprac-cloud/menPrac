@@ -83,10 +83,10 @@ export default function Landing() {
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:60,alignItems:"center",padding:"80px 24px",maxWidth:1200,margin:"auto"}}>
         <motion.div initial="hidden" animate="visible" variants={reveal}>
           <h2 style={{fontSize:52,fontWeight:800,lineHeight:1.2}}>
-            Intelligence for the modern clinic.
+            Precision in Practice.
           </h2>
           <p style={{opacity:.7,fontSize:20,marginTop:20,maxWidth:520}}>
-            Scheduling, telehealth, analytics and AI workflows built for modern healthcare teams.
+            Smarter Systems for Medical Health Professionals.
           </p>
           <motion.div whileHover={{scale:1.08}}>
             <Link href="/waitlist" style={{
