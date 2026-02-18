@@ -64,7 +64,7 @@ export default function Landing() {
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"24px",maxWidth:"1200px",margin:"auto"}}>
         <motion.div initial={{opacity:0,x:-40}} animate={{opacity:1,x:0}} style={{display:"flex",alignItems:"center",gap:12}}>
           <Image src="/logo.png" alt="MenPrac Logo" width={40} height={40}/>
-          <h1 style={{fontSize:24,fontWeight:700}}>MenPrac</h1>
+          <h1 style={{fontSize:24,fontWeight:700}}></h1>
         </motion.div>
 
         <motion.div whileHover={{scale:1.1}}>
