@@ -63,7 +63,7 @@ export default function Landing() {
       {/* NAVBAR WITH LOGO */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"24px",maxWidth:"1200px",margin:"auto"}}>
         <motion.div initial={{opacity:0,x:-40}} animate={{opacity:1,x:0}} style={{display:"flex",alignItems:"center",gap:12}}>
-          <Image src="/logo.png" alt="MenPrac Logo" width={40} height={40}/>
+          <Image src="/logo.png" alt="MenPrac Logo" width={100} height={100}/>
           <h1 style={{fontSize:24,fontWeight:700}}></h1>
         </motion.div>
 
