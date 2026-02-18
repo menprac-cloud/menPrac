@@ -4,8 +4,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const HERO_URL = "https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json";
+const FEATURES_LOTTIE = "https://assets9.lottiefiles.com/packages/lf20_qp1q7mct.json";
+const BENEFITS_LOTTIE = "https://assets2.lottiefiles.com/packages/lf20_x62chJ.json";
+const CTA_LOTTIE = "https://assets10.lottiefiles.com/packages/lf20_touohxv0.json";
 
 const BRAND = {
   dark: "#0B0F2F",
@@ -17,182 +21,100 @@ const BRAND = {
 
 function useLottieData(url: string) {
   const [data, setData] = useState<any>(null);
-  useEffect(() => {
-    fetch(url).then((r) => r.json()).then(setData);
-  }, [url]);
+  useEffect(() => { fetch(url).then((r) => r.json()).then(setData); }, [url]);
   return data;
 }
 
-/* floating dashboard animation used in BENEFITS section */
-function FloatingDashboard() {
+function GlowBg() {
   return (
-    <div style={{
-      position:"relative",
-      height:320,
-      borderRadius:30,
-      overflow:"hidden",
-      background:"linear-gradient(135deg,#4F2DFF33,#6C63FF33)"
-    }}>
-      <motion.div
-        animate={{ x:[0,40,-40,0], y:[0,-30,30,0] }}
-        transition={{ duration:10, repeat:Infinity }}
-        style={{
-          position:"absolute",
-          width:200,
-          height:200,
-          background:"#6C63FF55",
-          filter:"blur(80px)",
-          borderRadius:"50%"
-        }}
-      />
-
-      <motion.div
-        animate={{ y:[0,-20,0] }}
-        transition={{ duration:3, repeat:Infinity }}
-        style={{
-          position:"absolute",
-          top:40,left:40,
-          padding:"12px 18px",
-          borderRadius:16,
-          background:"rgba(255,255,255,0.1)",
-          backdropFilter:"blur(10px)"
-        }}>
-        🤖 AI booked appointment
-      </motion.div>
-
-      <div style={{position:"absolute",bottom:40,left:40,display:"flex",gap:6}}>
-        {[40,80,60,100].map((h,i)=>(
-          <motion.div key={i}
-            animate={{height:[20,h,20]}}
-            transition={{duration:3,repeat:Infinity,delay:i*0.2}}
-            style={{width:6,background:"white",borderRadius:4}}
-          />
-        ))}
-      </div>
-
-      <motion.div
-        animate={{ y:[0,-15,0] }}
-        transition={{ duration:4, repeat:Infinity }}
-        style={{
-          position:"absolute",
-          right:30,bottom:30,
-          padding:"12px 18px",
-          borderRadius:16,
-          background:"rgba(255,255,255,0.1)"
-        }}>
-        +35% efficiency
-      </motion.div>
-    </div>
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+      style={{
+        position: "fixed",
+        width: 900,
+        height: 900,
+        borderRadius: "50%",
+        background: "radial-gradient(circle,#4F2DFF55,#6C63FF22,transparent 70%)",
+        filter: "blur(120px)",
+        top: -200,
+        left: -200,
+        zIndex: 0,
+      }}
+    />
   );
 }
 
 export default function Landing() {
   const heroAnim = useLottieData(HERO_URL);
+  const featuresAnim = useLottieData(FEATURES_LOTTIE);
+  const benefitsAnim = useLottieData(BENEFITS_LOTTIE);
+  const ctaAnim = useLottieData(CTA_LOTTIE);
 
   const reveal = {
-    hidden:{opacity:0,y:40},
-    visible:{opacity:1,y:0,transition:{duration:.8}}
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
   return (
-    <div style={{background:BRAND.dark,color:"white",fontFamily:"Inter, sans-serif"}}>
+    <div style={{ background: BRAND.dark, color: "white", fontFamily: "Inter, sans-serif", position:"relative" }}>
+      <GlowBg/>
 
-      {/* NAVBAR */}
-      <div style={{
-        display:"flex",
-        justifyContent:"space-between",
-        alignItems:"center",
-        padding:"24px",
-        maxWidth:"1200px",
-        margin:"auto"
-      }}>
-        <h1 style={{fontSize:24,fontWeight:700}}>MenPrac</h1>
+      {/* NAVBAR WITH LOGO */}
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"24px",maxWidth:"1200px",margin:"auto"}}>
+        <motion.div initial={{opacity:0,x:-40}} animate={{opacity:1,x:0}} style={{display:"flex",alignItems:"center",gap:12}}>
+          <Image src="/logo.png" alt="MenPrac Logo" width={40} height={40}/>
+          <h1 style={{fontSize:24,fontWeight:700}}>MenPrac</h1>
+        </motion.div>
 
-        <Link href="/waitlist" style={{
-          padding:"10px 22px",
-          borderRadius:12,
-          fontWeight:600,
-          background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
-          color:"white",
-          textDecoration:"none"
-        }}>
-          Join Waitlist
-        </Link>
+        <motion.div whileHover={{scale:1.1}}>
+          <Link href="/waitlist" style={{
+            padding:"10px 22px",
+            borderRadius:12,
+            fontWeight:600,
+            background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
+            color:"white",textDecoration:"none"}}>
+            Join Waitlist
+          </Link>
+        </motion.div>
       </div>
 
       {/* HERO */}
-      <div style={{
-        display:"grid",
-        gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",
-        gap:60,
-        alignItems:"center",
-        padding:"80px 24px",
-        maxWidth:1200,
-        margin:"auto"
-      }}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:60,alignItems:"center",padding:"80px 24px",maxWidth:1200,margin:"auto"}}>
         <motion.div initial="hidden" animate="visible" variants={reveal}>
           <h2 style={{fontSize:52,fontWeight:800,lineHeight:1.2}}>
             Intelligence for the modern clinic.
           </h2>
-
           <p style={{opacity:.7,fontSize:20,marginTop:20,maxWidth:520}}>
             Scheduling, telehealth, analytics and AI workflows built for modern healthcare teams.
           </p>
-
-          <Link href="/waitlist" style={{
-            display:"inline-block",
-            marginTop:40,
-            padding:"18px 36px",
-            borderRadius:16,
-            fontSize:18,
-            fontWeight:700,
-            background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
-            color:"white",
-            textDecoration:"none"
-          }}>
-            Request Early Access
-          </Link>
+          <motion.div whileHover={{scale:1.08}}>
+            <Link href="/waitlist" style={{
+              display:"inline-block",marginTop:40,padding:"18px 36px",
+              borderRadius:16,fontSize:18,fontWeight:700,
+              background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
+              color:"white",textDecoration:"none"}}>
+              Request Early Access
+            </Link>
+          </motion.div>
         </motion.div>
 
-        <motion.div
-          initial={{opacity:0,scale:.8}}
-          animate={{opacity:1,scale:1}}
-          transition={{duration:1}}
-        >
+        <motion.div initial={{opacity:0,scale:.8}} animate={{opacity:1,scale:1}} transition={{duration:1}}>
           {heroAnim && <Lottie animationData={heroAnim} loop />}
         </motion.div>
       </div>
 
-      {/* FEATURES */}
-      <motion.div
-        variants={reveal} initial="hidden" whileInView="visible"
-        viewport={{once:true}}
-        style={{padding:"100px 24px",maxWidth:1200,margin:"auto"}}
-      >
-        <h3 style={{fontSize:36,fontWeight:700,textAlign:"center"}}>
-          Precision Engineering
-        </h3>
+      {/* FEATURES + LOTTIE HEADER */}
+      <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{once:true}} style={{padding:"100px 24px",maxWidth:1200,margin:"auto"}}>
+        {featuresAnim && <div style={{maxWidth:300,margin:"auto"}}><Lottie animationData={featuresAnim} loop/></div>}
+        <h3 style={{fontSize:36,fontWeight:700,textAlign:"center"}}>Features</h3>
 
-        <div style={{
-          display:"grid",
-          gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",
-          gap:30,
-          marginTop:60
-        }}>
-          {[
-            "AI Clinical Documentation",
-            "Predictive No-Show Intelligence",
-            "Revenue Optimization Engine",
-            "HIPAA-Ready Infrastructure",
-            "Multi-Location Control Center",
-            "Real-Time Analytics"
-          ].map((feature,i)=>(
-            <motion.div key={i} whileHover={{y:-10}} style={{
-              background:BRAND.glass,
-              border:`1px solid ${BRAND.border}`,
-              borderRadius:24,
-              padding:28
-            }}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:30,marginTop:60}}>
+          {["AI Clinical Documentation","Predictive No-Show Intelligence","Revenue Optimization Engine","HIPAA-Ready Infrastructure","Multi-Location Control Center","Real-Time Analytics"]
+          .map((feature,i)=>(
+            <motion.div key={i} whileHover={{y:-12,scale:1.05}} style={{
+              background:BRAND.glass,border:`1px solid ${BRAND.border}`,
+              borderRadius:24,padding:28,boxShadow:"0 0 20px #6C63FF22"}}>
               <h4 style={{fontSize:20,fontWeight:600}}>{feature}</h4>
               <p style={{opacity:.6,marginTop:10}}>
                 Designed to reduce operational friction and improve outcomes.
@@ -202,27 +124,14 @@ export default function Landing() {
         </div>
       </motion.div>
 
-      {/* BENEFITS */}
-      <motion.div
-        variants={reveal} initial="hidden" whileInView="visible"
-        viewport={{once:true}}
-        style={{background:BRAND.glass,padding:"100px 24px"}}
-      >
-        <div style={{
-          maxWidth:1100,
-          margin:"auto",
-          display:"grid",
-          gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",
-          gap:50,
-          alignItems:"center"
-        }}>
-          <FloatingDashboard />
-
+      {/* BENEFITS + LOTTIE */}
+      <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{once:true}} style={{background:BRAND.glass,padding:"100px 24px"}}>
+        <div style={{maxWidth:1100,margin:"auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:50,alignItems:"center"}}>
+          {benefitsAnim && <Lottie animationData={benefitsAnim} loop/>}
           <div>
             <h3 style={{fontSize:40,fontWeight:800}}>
-              Empowering clinics with AI
+              Empowering clinics with AI-powered multidisciplinary clinical system
             </h3>
-
             <ul style={{marginTop:20,lineHeight:2,opacity:.8}}>
               <li>✔ Reduce patient no-shows by 35%</li>
               <li>✔ Automate repetitive admin tasks</li>
@@ -233,37 +142,25 @@ export default function Landing() {
         </div>
       </motion.div>
 
-      {/* FINAL CTA */}
+      {/* FINAL CTA + LOTTIE */}
       <div style={{textAlign:"center",padding:"120px 20px"}}>
-        <h3 style={{fontSize:42,fontWeight:800}}>
-          Ready for the upgrade?
-        </h3>
-
-        <Link href="/waitlist" style={{
-          display:"inline-block",
-          marginTop:40,
-          padding:"20px 40px",
-          borderRadius:18,
-          fontSize:20,
-          fontWeight:700,
-          background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
-          color:"white",
-          textDecoration:"none"
-        }}>
-          Join the Waitlist
-        </Link>
+        {ctaAnim && <div style={{maxWidth:260,margin:"auto"}}><Lottie animationData={ctaAnim} loop/></div>}
+        <h3 style={{fontSize:42,fontWeight:800}}>Ready for the upgrade?</h3>
+        <motion.div whileHover={{scale:1.1}}>
+          <Link href="/waitlist" style={{
+            display:"inline-block",marginTop:40,padding:"20px 40px",
+            borderRadius:18,fontSize:20,fontWeight:700,
+            background:`linear-gradient(90deg,${BRAND.primary},${BRAND.secondary})`,
+            color:"white",textDecoration:"none"}}>
+            Join the Waitlist
+          </Link>
+        </motion.div>
       </div>
 
       {/* FOOTER */}
-      <div style={{
-        borderTop:`1px solid ${BRAND.border}`,
-        padding:30,
-        textAlign:"center",
-        opacity:.5
-      }}>
+      <div style={{borderTop:`1px solid ${BRAND.border}`,padding:30,textAlign:"center",opacity:.5}}>
         © 2026 MenPrac. All rights reserved.
       </div>
-
     </div>
   );
 }
